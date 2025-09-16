@@ -31,6 +31,8 @@
  <section id="services">
  <h2>Наши услуги</h2>
  <p>Описание предоставляемых услуг...</p>
+ <!-- Кнопка открытия модалки -->
+<button id="openDialog" type="button">Написать нам</button>
  <a href="#contacts">Связаться с нами</a> <!-- Якорная ссылка внутри страницы -->
  </section>
  <!-- Секция 2 с якорем -->
@@ -44,43 +46,6 @@
  <p>Наши контакты...</p>
  <a href="contacts.html">Подробнее</a> <!-- Ссылка на отдельную страницу -->
  </section>
- <!-- Кнопка открытия модалки -->
-<button id="openDialog" type="button">Написать нам</button>
-<!-- Модалка с формой -->
-<dialog id="contactDialog" aria-labelledby="dialogTitle">
- <h2 id="dialogTitle">Обратная связь</h2>
- <form id="contactForm" method="dialog" novalidate>
- <label for="name">Имя</label>
- <input id="name" name="name" type="text" required minlength="2" 
-autocomplete="given-name">
- <label for="email">E-mail</label>
- <input id="email" name="email" type="email" required 
-autocomplete="email">
- <label for="phone">Телефон</label>
- <input id="phone" name="phone" type="tel" inputmode="tel" 
-autocomplete="tel"
- aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__"
- required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
- <small id="phoneHelp">Формат: +7 (900) 000-00-00</small>
- <label for="date">Дата</label>
- <input id="date" name="date" type="date">
- <label for="topic">Тема</label>
- <select id="topic" name="topic" required>
- <option value="">Выберите тему</option>
- <option>Вопрос</option>
- <option>Заказ</option>
- </select>
- <label for="message">Сообщение</label>
- <textarea id="message" name="message" rows="4" required></textarea>
- <div class="form-actions">
- <button type="button" id="closeDialog">Закрыть</button>
- <button type="submit">Отправить</button>
- </div>
- </form>
-</dialog>
-dialog { padding: 1.25rem; border: none; border-radius: 12px; }
-dialog::backdrop { background: rgba(0,0,0,.5); }
-.form-actions { display:flex; gap:.5rem; margin-top:1rem; }
  </main>
  <!-- Подвал сайта -->
  <footer>
