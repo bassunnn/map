@@ -11,6 +11,7 @@
     <meta property="og:description" content="Описание страницы">
     <meta property="og:image" content="https://.../link-to-image.jpg">
     <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
  <header>
@@ -31,20 +32,9 @@
  <section id="services">
  <h2>Наши услуги</h2>
  <p>Описание предоставляемых услуг...</p>
- <a href="#contacts">Связаться с нами</a> <!-- Якорная ссылка внутри страницы -->
- </section>
- <!-- Секция 2 с якорем -->
- <section id="portfolio">
- <h2>Портфолио</h2>
- <p>Примеры наших работ...</p>
- </section>
- <!-- Секция 3 с якорем -->
- <section id="contacts">
- <h2>Контактная информация</h2>
- <p>Наши контакты...</p>
- <a href="contacts.html">Подробнее</a> <!-- Ссылка на отдельную страницу -->
- </section>
  <!-- Кнопка открытия модалки -->
+<button id="openDialog" type="button">Написать нам</button>
+<!-- Кнопка открытия модалки -->
 <button id="openDialog" type="button">Написать нам</button>
 <!-- Модалка с формой -->
 <dialog id="contactDialog" aria-labelledby="dialogTitle">
@@ -78,9 +68,19 @@ autocomplete="tel"
  </div>
  </form>
 </dialog>
-dialog { padding: 1.25rem; border: none; border-radius: 12px; }
-dialog::backdrop { background: rgba(0,0,0,.5); }
-.form-actions { display:flex; gap:.5rem; margin-top:1rem; }
+ <a href="#contacts">Связаться с нами</a> <!-- Якорная ссылка внутри страницы -->
+ </section>
+ <!-- Секция 2 с якорем -->
+ <section id="portfolio">
+ <h2>Портфолио</h2>
+ <p>Примеры наших работ...</p>
+ </section>
+ <!-- Секция 3 с якорем -->
+ <section id="contacts">
+ <h2>Контактная информация</h2>
+ <p>Наши контакты...</p>
+ <a href="contacts.html">Подробнее</a> <!-- Ссылка на отдельную страницу -->
+ </section>
  </main>
  <!-- Подвал сайта -->
  <footer>
