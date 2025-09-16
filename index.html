@@ -1,89 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вери кул сайт бейби</title>
-    <meta name="description" content="Ну тут типа куууул">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Заголовок страницы">
-    <meta property="og:description" content="Описание страницы">
-    <meta property="og:image" content="https://.../link-to-image.jpg">
-    <link rel="stylesheet" href="styles.css">
-    <script src="main.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Вери кул сайт бейби</title>
+  <meta name="description" content="Ну тут типа куууул">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
 </head>
 <body>
- <header>
- <a href="/">Смачная беброчка</a>
- <!-- Главное меню навигации -->
- <nav>
- <ul>
- <li><a href="index.html">Главная</a></li>
- <li><a href="src/about.html">О нас</a></li>
- <li><a href="src/contacts.html">Контакты</a></li>
- </ul>
- </nav>
- </header>
- <!-- Уникальное основное содержимое страницы -->
- <main>
- <h1>Добро пожаловать на наш сайт!</h1>
- <!-- Секция 1 с якорем -->
- <section id="services">
- <h2>Наши услуги</h2>
- <p>Описание предоставляемых услуг...</p>
- <!-- Кнопка открытия модалки -->
-<button id="openDialog" type="button">Написать нам</button>
-<!-- Модалка с формой -->
-<dialog id="contactDialog" aria-labelledby="dialogTitle">
- <h2 id="dialogTitle">Обратная связь</h2>
- <form id="contactForm" method="dialog" novalidate>
- <label for="name">Имя</label>
- <input id="name" name="name" type="text" required minlength="2" 
-autocomplete="given-name">
- <label for="email">E-mail</label>
- <input id="email" name="email" type="email" required 
-autocomplete="email">
- <label for="phone">Телефон</label>
- <input id="phone" name="phone" type="tel" inputmode="tel" 
-autocomplete="tel"
- aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__"
- required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
- <small id="phoneHelp">Формат: +7 (900) 000-00-00</small>
- <label for="date">Дата</label>
- <input id="date" name="date" type="date">
- <label for="topic">Тема</label>
- <select id="topic" name="topic" required>
- <option value="">Выберите тему</option>
- <option>Вопрос</option>
- <option>Заказ</option>
- </select>
- <label for="message">Сообщение</label>
- <textarea id="message" name="message" rows="4" required></textarea>
- <div class="form-actions">
- <button type="button" id="closeDialog">Закрыть</button>
- <button type="submit">Отправить</button>
- </div>
- </form>
-</dialog>
- <a href="#contacts">Связаться с нами</a> <!-- Якорная ссылка внутри страницы -->
- </section>
- <!-- Секция 2 с якорем -->
- <section id="portfolio">
- <h2>Портфолио</h2>
- <p>Примеры наших работ...</p>
- </section>
- <!-- Секция 3 с якорем -->
- <section id="contacts">
- <h2>Контактная информация</h2>
- <p>Наши контакты...</p>
- <a href="contacts.html">Подробнее</a> <!-- Ссылка на отдельную страницу -->
- </section>
- </main>
- <!-- Подвал сайта -->
- <footer>
- <p>&copy; 2023 Название вашего сайта. Все права защищены.</p>
- <p>Телефон: +7 (123) 456-78-90</p>
- </footer>
-</body>
-</html>
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-header__brand" href="/">Смачная беброчка</a>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">Тема</button>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul class="site-nav__list">
+          <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="src/about.html">О нас</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="src/contacts.html">Контакты</a></li>
+          <li class="site-nav__item"><a class="site-nav__link site-nav__link--cta" href="#contacts">Связаться</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <ol class="breadcrumbs__list container">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="index.html">Главная</a></li>
+      <li class="breadcrumbs__item" aria-current="page">Портфолио</li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero__inner container">
+        <h1 class="hero__title">Добро пожаловать на наш сайт!</h1>
+        <p class="hero__lead">Короткое описание — красиво и заметно поверх фонового изображения.</p>
+        <div class="hero__actions">
+          <button id="openDialog" class="button button--primary" type="button">Написать нам</button>
+          <a class="button button--ghost" href="#portfolio">Посмотреть портфолио</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section section--services container">
+      <h2 class="section__title">Наши услуги</h2>
+      <p>Описание предоставляемых услуг...</p>
+      <a class="anchor-link" href="#contacts">Связаться с нами</a>
+    </section>
+
+    <section id="portfolio" class="section section--portfolio container">
+      <h2 class="section__title">Портфолио</h2>
+      <picture class="card__picture">
+        <source type="image/webp" srcset="img/project-640.webp 640w, img/project-960.webp 960w, img/project-1280.webp 1280w">
+        <img src="img/project-640.jpg" srcset="img/project-640.jpg 640w, img/project-960.jpg 960w, img/project-1280.jpg 1280w" sizes="(max-width: 700px) 92vw, (max-width: 1200px) 640px, 960px" alt="Пример работы" width="1280" height="720" loading="lazy">
+      </picture>
+      <p>Примеры наших работ...</p>
+    </section>
+
+    <section id="video" class="section section--media container">
+      <h2 class="section__title">Видео о проекте</h2>
+      <div class="media">
+        <video class="media__player" controls preload="metadata" playsinline width="960" height="540" poster="video/poster.jpg">
+          <source src="video/teaser-1080.mp4" type="video/mp4">
+          <track kind="captions" srclang="ru" src="video/captions-ru.vtt" label="Русские субтитры" default>
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+    </section>
+
+    <section id="contacts" class="section section--contacts container">
+      <h2 class="section__title">Контактная информация</h2>
+      <p>Наши контакты...</p>
+      <a href="src/contacts.html">Подробнее</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2023 Название вашего сайта. Все права защищены.</p>
+      <p>Телефон: +7 (123) 456-78-90</p>
+    </div>
+  </footer>
+
+  <dialog id="contactDialog" class="modal" aria-labelledby="dialogTitle">
+    <div class="modal__content">
+      <h2 id="dialogTitle">Обратная связь</h2>
+      <form id="contactForm" class="form form--contact" method="dialog" novalidate>
+        <label class="form__label" for="name">Имя</label>
+        <input class="form__control" id="name" name="name" type="text" required minlength="2" autocomplete="given-name">
+
+        <label class="form__label" for="email">E-mail</label>
+        <input class="form__control" id="email" name="email" type="email" required autocomplete="email">
+
+        <label class="form__label" for="phone">Телефон</label>
+        <input class="form__control" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__" required pattern="^\\+7 \\\d{3} \\\d{3}-\\\d{2}-\\\d{2}$">
+        <small id="phoneHelp" class="form__help">Формат: +7 (900) 000-00-00</small>
+
+        <label class="form__label" for="date">Дата</label>
+        <input class="form__control" id="date" name="date" type="dat

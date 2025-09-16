@@ -1,4 +1,4 @@
-// Элементы DOM
+// Элементы DOM и логика модалки/формы + переключатель темы
 const dlg = document.getElementById('contactDialog');
 const openBtn = document.getElementById('openDialog');
 const closeBtn = document.getElementById('closeDialog');
@@ -7,100 +7,88 @@ const phoneInput = document.getElementById('phone');
 let lastActive = null;
 
 // Открытие модалки
-openBtn.addEventListener('click', () => {
-    lastActive = document.activeElement;
-    dlg.showModal();
-    // Фокус на первое поле
-    dlg.querySelector('input, select, textarea, button')?.focus();
+openBtn?.addEventListener('click', () => {
+  lastActive = document.activeElement;
+  dlg.showModal();
+  dlg.querySelector('input, select, textarea, button')?.focus();
 });
 
 // Закрытие модалки
-closeBtn.addEventListener('click', () => dlg.close('cancel'));
+closeBtn?.addEventListener('click', () => dlg.close('cancel'));
 
 // Обработка отправки формы
 form?.addEventListener('submit', (e) => {
-    // 1) Сброс кастомных сообщений
-    [...form.elements].forEach(el => el.setCustomValidity?.(''));
-    
-    // 2) Проверка встроенных ограничений
-    if (!form.checkValidity()) {
-        e.preventDefault();
-        
-        // Кастомные сообщения об ошибках
-        const email = form.elements.email;
-        if (email?.validity.typeMismatch) {
-            email.setCustomValidity('Введите корректный e-mail, например name@example.com');
-        }
-        
-        const phone = form.elements.phone;
-        if (phone?.validity.patternMismatch) {
-            phone.setCustomValidity('Введите телефон в формате: +7 (900) 000-00-00');
-        }
-        
-        form.reportValidity();
-        
-        // Подсветка проблемных полей
-        [...form.elements].forEach(el => {
-            if (el.willValidate) {
-                el.toggleAttribute('aria-invalid', !el.checkValidity());
-            }
-        });
-        return;
-    }
-    
-    // 3) Успешная отправка
+  [...form.elements].forEach(el => el.setCustomValidity?.(''));
+
+  if (!form.checkValidity()) {
     e.preventDefault();
-    alert('Форма успешно отправлена!');
-    dlg.close('success');
-    form.reset();
-    
-    // Сброс состояния ошибок
+
+    const email = form.elements.email;
+    if (email?.validity.typeMismatch) {
+      email.setCustomValidity('Введите корректный e-mail, например name@example.com');
+    }
+
+    const phone = form.elements.phone;
+    if (phone?.validity.patternMismatch) {
+      phone.setCustomValidity('Введите телефон в формате: +7 (900) 000-00-00');
+    }
+
+    form.reportValidity();
+
     [...form.elements].forEach(el => {
-        el.removeAttribute('aria-invalid');
+      if (el.willValidate) {
+        el.toggleAttribute('aria-invalid', !el.checkValidity());
+      }
     });
+    return;
+  }
+
+  e.preventDefault();
+  alert('Форма успешно отправлена!');
+  dlg.close('success');
+  form.reset();
+  [...form.elements].forEach(el => el.removeAttribute('aria-invalid'));
 });
 
-// Восстановление фокуса при закрытии модалки
-dlg.addEventListener('close', () => {
-    lastActive?.focus();
-});
+// Восстановление фокуса
+dlg?.addEventListener('close', () => { lastActive?.focus(); });
 
-// Легкая маска телефона (дополнительно)
+// Маска телефона
 phoneInput?.addEventListener('input', (e) => {
-    const input = e.target;
-    let value = input.value.replace(/\D/g, '');
-    
-    if (value.startsWith('8')) {
-        value = '7' + value.slice(1);
-    }
-    
-    if (value.startsWith('7')) {
-        value = value.slice(1);
-    }
-    
-    let formattedValue = '+7';
-    
-    if (value.length > 0) {
-        formattedValue += ' (' + value.slice(0, 3);
-    }
-    if (value.length > 3) {
-        formattedValue += ') ' + value.slice(3, 6);
-    }
-    if (value.length > 6) {
-        formattedValue += '-' + value.slice(6, 8);
-    }
-    if (value.length > 8) {
-        formattedValue += '-' + value.slice(8, 10);
-    }
-    
-    input.value = formattedValue;
+  const input = e.target;
+  let value = input.value.replace(/\D/g, '');
+
+  if (value.startsWith('8')) value = '7' + value.slice(1);
+  if (value.startsWith('7')) value = value.slice(1);
+
+  let formattedValue = '+7';
+  if (value.length > 0) formattedValue += ' (' + value.slice(0,3);
+  if (value.length > 3) formattedValue += ') ' + value.slice(3,6);
+  if (value.length > 6) formattedValue += '-' + value.slice(6,8);
+  if (value.length > 8) formattedValue += '-' + value.slice(8,10);
+
+  input.value = formattedValue;
 });
 
-// Валидация при вводе (снимаем ошибку при исправлении)
+// Валидация при вводе
 form?.addEventListener('input', (e) => {
-    const el = e.target;
-    if (el.willValidate) {
-        el.setCustomValidity('');
-        el.removeAttribute('aria-invalid');
-    }
+  const el = e.target;
+  if (el.willValidate) {
+    el.setCustomValidity('');
+    el.removeAttribute('aria-invalid');
+  }
+});
+
+// Переключатель темы
+const KEY = 'theme';
+const btn = document.querySelector('.theme-toggle');
+const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+if (localStorage.getItem(KEY) === 'dark' || (!localStorage.getItem(KEY) && prefersDark)) {
+  document.body.classList.add('theme-dark');
+  btn?.setAttribute('aria-pressed', 'true');
+}
+btn?.addEventListener('click', () => {
+  const isDark = document.body.classList.toggle('theme-dark');
+  btn.setAttribute('aria-pressed', String(isDark));
+  localStorage.setItem(KEY, isDark ? 'dark' : 'light');
 });
