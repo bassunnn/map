@@ -10,19 +10,51 @@ let lastActive = null;
 openBtn?.addEventListener('click', () => {
   lastActive = document.activeElement;
   dlg.showModal();
-  dlg.querySelector('input, select, textarea, button')?.focus();
+  
+  // Фокусировка на первом интерактивном элементе с задержкой для гарантии отображения модалки
+  setTimeout(() => {
+    const focusableElement = dlg.querySelector('input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])');
+    focusableElement?.focus();
+  }, 10);
 });
 
 // Закрытие модалки
-closeBtn?.addEventListener('click', () => dlg.close('cancel'));
+closeBtn?.addEventListener('click', () => {
+  dlg.close('cancel');
+  lastActive?.focus();
+});
+
+// Обработка закрытия модалки по клику вне ее области
+dlg?.addEventListener('click', (e) => {
+  if (e.target === dlg) {
+    dlg.close('cancel');
+    lastActive?.focus();
+  }
+});
+
+// Обработка нажатия Escape
+dlg?.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    dlg.close('cancel');
+    lastActive?.focus();
+  }
+});
 
 // Обработка отправки формы
 form?.addEventListener('submit', (e) => {
-  [...form.elements].forEach(el => el.setCustomValidity?.(''));
+  e.preventDefault();
+  
+  // Сброс кастомных сообщений об ошибках
+  [...form.elements].forEach(el => {
+    if (el.setCustomValidity) {
+      el.setCustomValidity('');
+    }
+  });
 
+  // Проверка валидности формы
   if (!form.checkValidity()) {
-    e.preventDefault();
-
+    // Установка кастомных сообщений об ошибках
     const email = form.elements.email;
     if (email?.validity.typeMismatch) {
       email.setCustomValidity('Введите корректный e-mail, например name@example.com');
@@ -33,50 +65,35 @@ form?.addEventListener('submit', (e) => {
       phone.setCustomValidity('Введите телефон в формате: +7 (900) 000-00-00');
     }
 
-    form.reportValidity();
-
+    // Обновление состояния валидации
     [...form.elements].forEach(el => {
       if (el.willValidate) {
-        el.toggleAttribute('aria-invalid', !el.checkValidity());
+        el.toggleAttribute('aria-invalid', !el.validity.valid);
       }
     });
+
+    // Показ ошибок
+    form.reportValidity();
     return;
   }
 
-  e.preventDefault();
+  // Если форма валидна
   alert('Форма успешно отправлена!');
   dlg.close('success');
   form.reset();
-  [...form.elements].forEach(el => el.removeAttribute('aria-invalid'));
-});
-
-// Восстановление фокуса
-dlg?.addEventListener('close', () => { lastActive?.focus(); });
-
-// Маска телефона
-phoneInput?.addEventListener('input', (e) => {
-  const input = e.target;
-  let value = input.value.replace(/\D/g, '');
-
-  if (value.startsWith('8')) value = '7' + value.slice(1);
-  if (value.startsWith('7')) value = value.slice(1);
-
-  let formattedValue = '+7';
-  if (value.length > 0) formattedValue += ' (' + value.slice(0,3);
-  if (value.length > 3) formattedValue += ') ' + value.slice(3,6);
-  if (value.length > 6) formattedValue += '-' + value.slice(6,8);
-  if (value.length > 8) formattedValue += '-' + value.slice(8,10);
-
-  input.value = formattedValue;
-});
-
-// Валидация при вводе
-form?.addEventListener('input', (e) => {
-  const el = e.target;
-  if (el.willValidate) {
-    el.setCustomValidity('');
+  
+  // Сброс состояний ошибок
+  [...form.elements].forEach(el => {
     el.removeAttribute('aria-invalid');
-  }
+  });
+  
+  // Возврат фокуса
+  lastActive?.focus();
+});
+
+// Обработка закрытия модалки
+dlg?.addEventListener('close', () => {
+  // Дополнительная логика при закрытии модалки
 });
 
 // Переключатель темы
