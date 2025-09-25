@@ -35,7 +35,7 @@
     <section id="hero" class="hero">
       <div class="hero__inner container">
         <h1 class="hero__title">Добро пожаловать на наш сайт!</h1>
-        <p class="hero__lead">Короткое описание — красиво и заметно поверх фонового изображения.</p>
+        <p class="hero__lead">Мы делвем крутые вещи!(наверное)</p>
         <div class="hero__actions">
           <button id="openDialog" class="button button--primary" type="button">Написать нам</button>
           <a class="button button--ghost" href="#portfolio">Посмотреть портфолио</a>
@@ -94,8 +94,19 @@
         <input class="form__control" id="email" name="email" type="email" required autocomplete="email">
 
         <label class="form__label" for="phone">Телефон</label>
-        <input class="form__control" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__" required pattern="^\\+7 \\\d{3} \\\d{3}-\\\d{2}-\\\d{2}$">
+        <input class="form__control" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__" required pattern="^\\+7 \d{3} \d{3}-\d{2}-\d{2}$">
         <small id="phoneHelp" class="form__help">Формат: +7 (900) 000-00-00</small>
 
         <label class="form__label" for="date">Дата</label>
-        <input class="form__control" id="date" name="date" type="dat
+        <input class="form__control" id="date" name="date" type="date" required>
+        
+        <div class="modal__actions">
+          <button type="submit" class="button button--primary">Отправить</button>
+          <button type="button" class="button button--secondary" data-close-dialog>Отмена</button>
+        </div>
+      </form>
+    </div>
+</dialog>
+
+<!-- Кнопка для открытия модалки -->
+<button type="button" data-open-dialog="contactDialog" class="button button--primary">Обратная связь</button>
